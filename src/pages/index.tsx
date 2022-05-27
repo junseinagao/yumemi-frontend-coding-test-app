@@ -1,9 +1,11 @@
 import type { NextPage } from "next"
+import { Header } from "src/components/Header"
 
 const HomePage: NextPage = () => {
   return (
     <>
-      <h1>ゆめみコーディングテスト試験アプリ</h1>
+      <Header />
+      <main></main>
     </>
   )
 }
