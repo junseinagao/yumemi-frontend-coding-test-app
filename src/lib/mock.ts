@@ -51,3 +51,36 @@ export const mockPrefectures = (): mockPrefecture[] => {
     return { name: value, id: index }
   })
 }
+
+export const mockHighchartsOptions = (): Highcharts.Options => {
+  const options: Highcharts.Options = {
+    title: {
+      text: "",
+    },
+    yAxis: {
+      title: {
+        text: "人口数",
+      },
+    },
+    xAxis: {
+      title: {
+        text: "年度",
+      },
+      categories: [
+        1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025, 2030, 2035,
+        2040, 2045,
+      ].map(String),
+    },
+    series: [
+      {
+        type: "line",
+        name: "東京都",
+        data: [
+          12817, 12707, 12571, 12602, 12199, 11518, 10888, 10133, 9275, 8431,
+          7610, 6816, 6048, 5324,
+        ],
+      },
+    ],
+  }
+  return options
+}
