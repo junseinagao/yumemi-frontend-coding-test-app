@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --watch",
     "format": "prettier **/*.{js,ts,tsx,json,css} --write --ignore-path .gitignore --no-error-on-unmatched-pattern --ignore-unknown",
     "test": "jest --watchAll",
     "test:ci": "jest --ci",
