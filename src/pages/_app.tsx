@@ -7,9 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>フロントエンドコーディング試験アプリ</title>
       </Head>
-      <main>
-        <Component {...pageProps} />
-      </main>
+      <Component {...pageProps} />
     </>
   )
 }
