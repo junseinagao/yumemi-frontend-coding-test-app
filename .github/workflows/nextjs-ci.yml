@@ -16,6 +16,9 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          NEXT_PUBLIC_RESAS_API_URI: ${{ secrets.NEXT_PUBLIC_RESAS_API_URI }}
+          NEXT_PUBLIC_RESAS_API_KEY: ${{ secrets.NEXT_PUBLIC_RESAS_API_KEY }}
         run: npm run build
 
       - name: Test
