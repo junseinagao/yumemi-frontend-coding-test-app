@@ -3,6 +3,7 @@ on:
   - pull_request
 jobs:
   nextjs:
+    environment: Production
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
