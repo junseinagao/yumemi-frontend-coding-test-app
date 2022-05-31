@@ -1,4 +1,4 @@
 type mockPrefecture = {
-  name: string
-  id: number
+  prefName: string
+  prefCode: string
 }
