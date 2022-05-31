@@ -1,6 +1,9 @@
 import { FC } from "react"
 
-type CheckboxProps = mockPrefecture
+type CheckboxProps = {
+  id: string
+  name: string
+}
 
 export const Checkbox: FC<CheckboxProps> = ({ name, id }) => {
   const customId = `prefecture-input-${id}`
