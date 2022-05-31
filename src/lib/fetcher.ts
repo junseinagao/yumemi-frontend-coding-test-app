@@ -10,9 +10,11 @@ export const createRequest = (
   resource: RequestInfo,
   init: RequestInit | undefined
 ): Request => {
-  const input = process.env.NEXT_PUBLIC_RESAS_API_URI
-    ? `${API_URI}${resource}`
-    : resource
+  const input =
+    !!process.env.NEXT_PUBLIC_RESAS_API_URI &&
+    process.env.NEXT_PUBLIC_RESAS_API_URI?.match(/https?:\/\//i)
+      ? `${API_URI}${resource}`
+      : resource
 
   const headers = new Headers({
     ...init?.headers,
