@@ -1,21 +1,34 @@
-import { Checkbox } from "src/components/Checkbox"
-import useSWR from "swr"
-
+import { usePrefectureCheckboxes } from "src/hooks/usePrefectureCheckboxes"
 export const PrefectureCheckboxes = () => {
-  const { data: prefectures } = useSWR("/api/v1/prefectures")
+  const {
+    prefectureChecboxes,
+    register,
+    useWatchCheckboxesOnChange,
+    validateIsLeastOneChecked,
+  } = usePrefectureCheckboxes()
+  useWatchCheckboxesOnChange()
+
   return (
     <>
-      {prefectures.result.map(
-        (pref: { prefCode: string; prefName: string }) => {
-          return (
-            <Checkbox
-              key={pref.prefCode}
-              id={pref.prefCode}
-              name={pref.prefName}
-            />
-          )
-        }
-      )}
+      <form>
+        {!validateIsLeastOneChecked && (
+          <div role="alert">１つ以上の都道府県を選択してください。</div>
+        )}
+        {prefectureChecboxes.prefectures.map(
+          ({ prefCode, prefName }, index) => {
+            const key = `checkbox-prefcode-${prefCode}`
+            return (
+              <label key={key}>
+                <input
+                  type="checkbox"
+                  {...register(`prefectures.${index}.selected`)}
+                />
+                {prefName}
+              </label>
+            )
+          }
+        )}
+      </form>
     </>
   )
 }
