@@ -1,16 +1,16 @@
-import { FC } from "react"
-import Highcharts from "highcharts"
-import HighchartsExporting from "highcharts/modules/exporting"
-import HighchartsReact from "highcharts-react-official"
+import { Suspense } from "react"
+import { ErrorBoundary } from "react-error-boundary"
+import { ChartGraph } from "./ChartGraph"
+import { ErrorBox } from "./ErrorBox"
 
-if (typeof Highcharts === "object") {
-  HighchartsExporting(Highcharts)
-}
-
-type ChartGraphSectionProps = {
-  options: Highcharts.Options
-}
-
-export const ChartGraphSection: FC<ChartGraphSectionProps> = ({ options }) => {
-  return <HighchartsReact highcharts={Highcharts} options={options} />
+export const ChartGraphSection = () => {
+  return (
+    <>
+      <ErrorBoundary FallbackComponent={ErrorBox}>
+        <Suspense fallback={<div>loading...</div>}>
+          <ChartGraph />
+        </Suspense>
+      </ErrorBoundary>
+    </>
+  )
 }
