@@ -1,4 +1,1 @@
-type mockPrefecture = {
-  prefName: string
-  prefCode: string
-}
+type mockPrefecture = Prefecture
