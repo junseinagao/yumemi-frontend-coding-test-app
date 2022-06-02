@@ -1,5 +1,7 @@
-import { render, screen } from "@testing-library/react"
+import { render, renderHook, screen } from "@testing-library/react"
+import { FormProvider } from "react-hook-form"
 import { SelectInputSection } from "src/components/SelectInputSection"
+import { usePrefectureCheckboxForm } from "src/hooks/prefectureCheckbox"
 import { mockPrefectures } from "src/lib/mock"
 import { Middleware, SWRResponse, SWRConfig } from "swr"
 
@@ -17,9 +19,13 @@ describe("SelectInputSection", () => {
       }
     }
 
+    const hook = renderHook(() => usePrefectureCheckboxForm())
+
     render(
       <SWRConfig value={{ use: [mockSWRMiddleware] }}>
-        <SelectInputSection />
+        <FormProvider {...hook.result.current.methods}>
+          <SelectInputSection />
+        </FormProvider>
       </SWRConfig>
     )
 

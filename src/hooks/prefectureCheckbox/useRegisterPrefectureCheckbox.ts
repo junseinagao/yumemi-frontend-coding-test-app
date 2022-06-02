@@ -1,10 +1,10 @@
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import useSWR from "swr"
 import { usePrefectureCheckboxFormContext } from "."
 
 export const useRegisterPrefectureCheckbox = () => {
   const { data } = useSWR<ResasAPIPrefecturesResponse>("/api/v1/prefectures")
-  const { register } = usePrefectureCheckboxFormContext()
+  const { register, setValue } = usePrefectureCheckboxFormContext()
 
   const prefectureChecboxes = useMemo(() => {
     if (typeof data === "object" && "result" in data) {
@@ -16,6 +16,12 @@ export const useRegisterPrefectureCheckbox = () => {
     }
     return { prefectures: [] }
   }, [data])
+
+  useEffect(() => {
+    prefectureChecboxes.prefectures.forEach((value, index) => {
+      setValue(`prefectures.${index}`, value)
+    })
+  }, [prefectureChecboxes, setValue])
 
   return {
     prefectureChecboxes,
