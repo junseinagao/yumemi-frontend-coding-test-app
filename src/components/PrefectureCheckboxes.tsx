@@ -4,9 +4,8 @@ import {
 } from "src/hooks/prefectureCheckbox"
 
 export const PrefectureCheckboxes = () => {
-  const { register, prefectureChecboxes, watch } =
-    useRegisterPrefectureCheckbox()
-  const validateIsLeastOneChecked = useValidateIsLeastOneChecked(watch)
+  const { register, prefectureChecboxes } = useRegisterPrefectureCheckbox()
+  const validateIsLeastOneChecked = useValidateIsLeastOneChecked()
 
   return (
     <>

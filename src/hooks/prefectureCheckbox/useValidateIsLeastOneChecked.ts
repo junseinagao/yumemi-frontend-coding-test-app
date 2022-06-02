@@ -1,9 +1,8 @@
 import { useMemo } from "react"
-import { UseFormWatch } from "react-hook-form"
+import { usePrefectureCheckboxFormContext } from "src/hooks/prefectureCheckbox"
 
-export const useValidateIsLeastOneChecked = (
-  watch: UseFormWatch<PrefectureCheckboxesForm>
-) => {
+export const useValidateIsLeastOneChecked = () => {
+  const { watch } = usePrefectureCheckboxFormContext()
   const formValues = watch()
   return useMemo(() => {
     return (

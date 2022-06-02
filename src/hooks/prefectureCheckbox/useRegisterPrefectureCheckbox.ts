@@ -1,10 +1,10 @@
 import { useMemo } from "react"
-import { useFormContext } from "react-hook-form"
 import useSWR from "swr"
+import { usePrefectureCheckboxFormContext } from "."
 
 export const useRegisterPrefectureCheckbox = () => {
   const { data } = useSWR<ResasAPIPrefecturesResponse>("/api/v1/prefectures")
-  const { register, ...props } = useFormContext<PrefectureCheckboxesForm>()
+  const { register } = usePrefectureCheckboxFormContext()
 
   const prefectureChecboxes = useMemo(() => {
     if (typeof data === "object" && "result" in data) {
@@ -20,6 +20,5 @@ export const useRegisterPrefectureCheckbox = () => {
   return {
     prefectureChecboxes,
     register,
-    ...props,
   }
 }
