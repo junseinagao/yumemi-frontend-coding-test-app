@@ -1,12 +1,12 @@
-import { usePrefectureCheckboxes } from "src/hooks/usePrefectureCheckboxes"
+import {
+  useRegisterPrefectureCheckbox,
+  useValidateIsLeastOneChecked,
+} from "src/hooks/prefectureCheckbox"
+
 export const PrefectureCheckboxes = () => {
-  const {
-    prefectureChecboxes,
-    register,
-    useWatchCheckboxesOnChange,
-    validateIsLeastOneChecked,
-  } = usePrefectureCheckboxes()
-  useWatchCheckboxesOnChange()
+  const { register, prefectureChecboxes, watch } =
+    useRegisterPrefectureCheckbox()
+  const validateIsLeastOneChecked = useValidateIsLeastOneChecked(watch)
 
   return (
     <>
