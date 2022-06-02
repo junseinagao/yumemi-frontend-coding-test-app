@@ -6,7 +6,7 @@ export const useSelectedPrefectureCodes = () => {
   const { watch } = usePrefectureCheckboxFormContext()
   const formValues = watch()
   return useMemo(() => {
-    if (formValues !== null && formValues.prefectures.length > 0)
+    if (formValues && formValues.prefectures.length > 0)
       return formValues.prefectures
         .filter(({ selected }) => selected)
         .map(({ prefCode }) => prefCode)
