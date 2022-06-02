@@ -48,7 +48,7 @@ export const mockPrefectures = (): mockPrefecture[] => {
     "鹿児島県",
     "沖縄県",
   ].map((value, index) => {
-    return { prefName: value, prefCode: String(index) }
+    return { prefName: value, prefCode: index }
   })
 }
 
