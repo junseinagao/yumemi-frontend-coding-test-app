@@ -1,14 +1,24 @@
 import Highcharts from "highcharts"
 import HighchartsExporting from "highcharts/modules/exporting"
 import HighchartsReact from "highcharts-react-official"
-import { mockHighchartsOptions } from "src/lib/mock"
+import { useChartsOptions } from "src/hooks/populationComposition"
 
 if (typeof Highcharts === "object") {
   HighchartsExporting(Highcharts)
 }
 
 export const ChartGraph = () => {
-  const options = mockHighchartsOptions()
+  const { options } = useChartsOptions()
 
-  return <HighchartsReact highcharts={Highcharts} options={options} />
+  return (
+    <>
+      {options !== undefined ? (
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      ) : (
+        <div role="alert">
+          都道府県を選択してください。または、ローディング中です。
+        </div>
+      )}
+    </>
+  )
 }
