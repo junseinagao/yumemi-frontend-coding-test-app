@@ -1,27 +1,28 @@
-import { useCallback, useEffect } from "react"
-import useSWRInfinite from "swr/infinite"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useSelectedPrefectureCodes } from "src/hooks/prefectureCheckbox/useSelectedPrefectureCodes"
-
+import { cache } from "src/lib/cache"
 export const useGetPopulationComposition = () => {
   const selectedPrefectureCodes = useSelectedPrefectureCodes()
-  const getKey = useCallback(
-    (index: number, _prevData: ResasAPIPopulationCompositionResponse) => {
-      console.log({ selectedPrefectureCodes, index })
-      if (selectedPrefectureCodes[index] === undefined) return null
-      return `/api/v1/population/composition/perYear?cityCode=-&prefCode=${selectedPrefectureCodes[index]}`
-    },
-    [selectedPrefectureCodes]
-  )
-  const methods = useSWRInfinite<ResasAPIPopulationCompositionResponse>(getKey)
+  const [responses, setResponses] = useState<
+    ResasAPIPopulationCompositionResponse[]
+  >([])
 
-  const { setSize } = methods
-  useEffect(() => {
-    if (selectedPrefectureCodes.length > 0) {
-      // ! setSize をここで実行すると無限ループに陥る
+  const fetchResponses = useCallback(async () => {
+    if (selectedPrefectureCodes.length !== responses.length) {
+      const tempResponses: ResasAPIPopulationCompositionResponse[] = []
+      for (let i = 0; i < selectedPrefectureCodes.length; i++) {
+        const tempResponse = (await cache.request(
+          `/api/v1/population/composition/perYear?cityCode=-&prefCode=${selectedPrefectureCodes[i]}`
+        )) as ResasAPIPopulationCompositionResponse
+        tempResponses.push(tempResponse)
+      }
+      setResponses(tempResponses)
     }
-  }, [setSize, selectedPrefectureCodes])
+  }, [selectedPrefectureCodes, responses])
 
-  return {
-    methods,
-  }
+  useEffect(() => {
+    fetchResponses()
+  }, [fetchResponses])
+
+  return { responses }
 }
