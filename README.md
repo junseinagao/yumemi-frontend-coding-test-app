@@ -1,6 +1,8 @@
 # Yumemi-frontend-coding-test-app
 
-📦 [Deploied here](https://yumemi-frontend-coding-test-app.vercel.app/)
+📦 [Deploied Preview here](https://yumemi-frontend-coding-test-app.vercel.app/)
+
+💌 [ゆめみ採用担当者様へこちらを一読ください](./COVER_LETTER.md)
 
 ## 開発するためには
 
