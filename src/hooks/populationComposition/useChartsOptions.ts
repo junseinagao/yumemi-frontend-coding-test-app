@@ -1,74 +1,41 @@
 import { useMemo } from "react"
+import { baseOptions, getCategories, makeSeries } from "src/lib/chartOptions"
 import { useSelectedPrefectureNames } from "../prefectureCheckbox"
 import { useGetPopulationComposition } from "./usePopulationComposition"
-
-const getCategories = (
-  response: ResasAPIPopulationCompositionResponse | undefined
-) => {
-  if (!(typeof response === "object" && "result" in response)) return []
-
-  let tempCategories: number[] = []
-  response.result.data.forEach((data) => {
-    if (data.label === "総人口") {
-      tempCategories = data.data.map(({ year }) => year)
-    }
-  })
-  return tempCategories
-}
-
-const makeSeries = (
-  name: string,
-  response: ResasAPIPopulationCompositionResponse
-) => {
-  if (!(typeof response === "object" && "result" in response)) return undefined
-  const totalPopulationData = response.result.data.find(
-    (value) => value.label === "総人口"
-  )
-  if (!totalPopulationData) return undefined
-  return {
-    type: "line",
-    name,
-    data: totalPopulationData.data.map(({ value }) => value),
-  }
-}
 
 export const useChartsOptions = () => {
   const names = useSelectedPrefectureNames()
   const { responses } = useGetPopulationComposition()
 
-  // @ts-ignore
-  const options = useMemo<Highcharts.Options | undefined>(() => {
+  const options = useMemo<Highcharts.Options>(() => {
     if (names.length === 0 || names.length !== responses.length)
-      return undefined
+      return baseOptions
     if (
       !responses.every(
         (response) => typeof response === "object" && "result" in response
       )
     ) {
-      return undefined
+      return baseOptions
     }
+    const series = responses.map((response, index) => {
+      return makeSeries(names[index], response)
+    })
+
+    if (!series) baseOptions
+
     const categoriesSample = responses.find(
       (response) => typeof response === "object" && "result" in response
     )
+    const categories = getCategories(categoriesSample)
+
     return {
-      title: {
-        text: "",
-      },
-      yAxis: {
-        title: {
-          text: "人口数",
-        },
-      },
+      ...baseOptions,
       xAxis: {
-        title: {
-          text: "年度",
-        },
-        categories: getCategories(categoriesSample),
+        ...baseOptions.zAxis,
+        categories,
       },
-      series: responses.map((response, index) => {
-        return makeSeries(names[index], response)
-      }),
-    }
+      series,
+    } as unknown as Highcharts.Options
   }, [names, responses])
 
   return {
