@@ -3,6 +3,7 @@ import type { AppProps } from "next/app"
 import Head from "next/head"
 import { SWRConfig } from "swr"
 import { fetcher } from "src/lib/fetcher"
+import "ress"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
