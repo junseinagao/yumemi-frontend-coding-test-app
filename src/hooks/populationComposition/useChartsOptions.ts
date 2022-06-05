@@ -32,43 +32,57 @@ const makeSeries = (
   }
 }
 
+const baseOptions: Highcharts.Options = {
+  title: {
+    text: "",
+  },
+  yAxis: {
+    title: {
+      text: "人口数",
+    },
+  },
+  xAxis: {
+    title: {
+      text: "年度",
+    },
+    categories: [],
+  },
+  series: [],
+}
+
 export const useChartsOptions = () => {
   const names = useSelectedPrefectureNames()
   const { responses } = useGetPopulationComposition()
 
-  // @ts-ignore
-  const options = useMemo<Highcharts.Options | undefined>(() => {
+  const options = useMemo<Highcharts.Options>(() => {
     if (names.length === 0 || names.length !== responses.length)
-      return undefined
+      return baseOptions
     if (
       !responses.every(
         (response) => typeof response === "object" && "result" in response
       )
     ) {
-      return undefined
+      return baseOptions
     }
+    const series = responses.map((response, index) => {
+      return makeSeries(names[index], response)
+    })
+
+    if (!series) baseOptions
+
     const categoriesSample = responses.find(
       (response) => typeof response === "object" && "result" in response
     )
+    const categories = getCategories(categoriesSample)
+
     return {
-      title: {
-        text: "",
-      },
-      yAxis: {
-        title: {
-          text: "人口数",
-        },
-      },
+      ...baseOptions,
       xAxis: {
-        title: {
-          text: "年度",
-        },
-        categories: getCategories(categoriesSample),
+        ...baseOptions.zAxis,
+        categories,
       },
-      series: responses.map((response, index) => {
-        return makeSeries(names[index], response)
-      }),
-    }
+      series,
+    } as unknown as Highcharts.Options
   }, [names, responses])
 
   return {
