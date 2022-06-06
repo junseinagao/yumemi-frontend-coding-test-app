@@ -1,0 +1,24 @@
+.whole-validation-alert-space {
+  display: flex;
+  align-items: center;
+  padding-left: var(--s-2);
+  min-height: var(--s-12);
+  margin-top: var(--s-4);
+  color: var(--c-accent-text);
+  background-color: var(--c-background);
+}
+
+.whole-validation-alert-space--invalid {
+  background-color: var(--c-accent-bg);
+}
+
+.checkboxes {
+  margin-top: var(--s-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+}
+
+.checkboxes input[type="checkbox"] {
+  margin-right: var(--s-1);
+}
