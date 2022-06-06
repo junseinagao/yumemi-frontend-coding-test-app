@@ -1,3 +1,4 @@
+import styles from "./PrefectureCheckboxes.module.css"
 import {
   useRegisterPrefectureCheckbox,
   useValidateIsLeastOneChecked,
@@ -9,10 +10,7 @@ export const PrefectureCheckboxes = () => {
 
   return (
     <>
-      <form>
-        {!validateIsLeastOneChecked && (
-          <div role="alert">１つ以上の都道府県を選択してください。</div>
-        )}
+      <form className={styles["checkboxes"]}>
         {prefectureChecboxes.prefectures.map(
           ({ prefCode, prefName }, index) => {
             const key = `checkbox-prefcode-${prefCode}`
@@ -28,6 +26,20 @@ export const PrefectureCheckboxes = () => {
           }
         )}
       </form>
+      <div
+        className={`${styles["whole-validation-alert-space"]} ${
+          !validateIsLeastOneChecked &&
+          styles["whole-validation-alert-space--invalid"]
+        }`}
+      >
+        {!validateIsLeastOneChecked && (
+          <span role="alert" className="g-line-breaker">
+            １つ以上の都道府県を
+            <wbr />
+            選択してください。
+          </span>
+        )}
+      </div>
     </>
   )
 }

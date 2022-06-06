@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--c-accent-bg);
+  color: var(--c-accent-text);
+  font-size: var(--t-sm);
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    font-size: var(--t-xl);
+  }
+}

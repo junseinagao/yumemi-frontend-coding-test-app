@@ -4,6 +4,7 @@ import Head from "next/head"
 import { SWRConfig } from "swr"
 import { fetcher } from "src/lib/fetcher"
 import "ress"
+import "src/global.css"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
