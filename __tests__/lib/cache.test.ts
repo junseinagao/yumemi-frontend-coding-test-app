@@ -28,3 +28,5 @@ describe("cache", () => {
     expect(cache.getCacheResponse).toBeCalledTimes(3)
   })
 })
+
+export {}
