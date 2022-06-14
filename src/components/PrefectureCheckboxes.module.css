@@ -21,4 +21,9 @@
 
 .checkboxes input[type="checkbox"] {
   margin-right: var(--s-1);
+  cursor: pointer;
+}
+
+.checkboxes label {
+  cursor: pointer;
 }
