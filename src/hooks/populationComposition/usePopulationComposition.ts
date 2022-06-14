@@ -9,14 +9,14 @@ export const useGetPopulationComposition = () => {
 
   const fetchResponses = useCallback(async () => {
     if (selectedPrefectureCodes.length !== responses.length) {
-      const tempResponses: ResasAPIPopulationCompositionResponse[] = []
-      for (let i = 0; i < selectedPrefectureCodes.length; i++) {
-        const tempResponse = (await cache.request(
-          `/api/v1/population/composition/perYear?cityCode=-&prefCode=${selectedPrefectureCodes[i]}`
-        )) as ResasAPIPopulationCompositionResponse
-        tempResponses.push(tempResponse)
-      }
-      setResponses(tempResponses)
+      const result = await Promise.all(
+        selectedPrefectureCodes.map((prefCode) => {
+          return cache.request(
+            `/api/v1/population/composition/perYear?cityCode=-&prefCode=${prefCode}`
+          )
+        }) as ResasAPIPopulationCompositionResponse[] | []
+      )
+      setResponses(result)
     }
   }, [selectedPrefectureCodes, responses])
 

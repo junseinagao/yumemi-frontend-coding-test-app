@@ -19,7 +19,7 @@ class Cache {
 
   public async request(key: string) {
     const temp = this.getCacheResponse(key)
-    if (temp && typeof temp === "object" && "results" in temp) {
+    if (temp && typeof temp === "object" && "result" in temp) {
       return this.getCacheResponse(key)
     }
 
